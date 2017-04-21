@@ -1,6 +1,6 @@
 #include "Proove.h"
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -45,16 +45,21 @@ private:
 int main(int argc, char **argv){
     InputParser input(argc, argv);
 
-    if(input.cmdOptionExists("-g") && input.cmdOptionExists("-c")){
-        throw "Can't use -g and -i at the same time.";
-    }
-
     if (input.getCmdOption("-p").empty()){
         throw "-p can not be ommited";
     }
 
+    if (input.getCmdOption("-t").empty()){
+        throw "-t can not be ommited";
+    }
+
+    if(input.cmdOptionExists("-g") && input.cmdOptionExists("-c")){
+        throw "Can't use -g and -i at the same time.";
+    }
+
     int gpio = stoi(input.getCmdOption("-p"));
-    Proove* p = new Proove(gpio);
+    int transmitter_id = stoi(input.getCmdOption("-t"));
+    Proove* p = new Proove(gpio, transmitter_id);
 
     if(input.cmdOptionExists("-c"))
     {

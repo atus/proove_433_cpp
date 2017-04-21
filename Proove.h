@@ -33,7 +33,7 @@ using namespace std;
 class Proove
 {
 public:
-    Proove(int gpio);
+    Proove(int gpio, int transmitter_id_dec);
     ~Proove();
     void channel_on(int channel_id);
     void channel_off(int channel_id);
@@ -55,7 +55,7 @@ private:
     const int tPauseHigh = 250;
     const int tPauseLow = 10000;
 
-    const string transmitter_id = "11100110000100010000000001";
+    string transmitter_id = "";
     const string on = "0";
     const string off = "1";
     const string channel_id[4] = {"00", "01", "10", "11"};

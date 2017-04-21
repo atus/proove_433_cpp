@@ -1,13 +1,26 @@
 #include "Proove.h"
+#include <math.h>
+#include <bitset>
 
 using namespace std;
 
-Proove::Proove(int gpio_pin)
+Proove::Proove(int gpio_pin, int transmitter_id_dec)
 {
     this->gpio_pin = gpio_pin;
-    if(wiringPiSetupGpio() == -1){
+
+    int maxid = pow(2,26)-1;
+    if(transmitter_id_dec > maxid)
+    {
+        throw "transmitter_id can not be larger than 2^26-1";
+    }
+
+    this->transmitter_id = std::bitset<26>(transmitter_id_dec).to_string();
+    
+    if(wiringPiSetupGpio() == -1)
+    {
         printf("%s \n", "Failed to setup wiringPi");
     }
+
     pinMode(this->gpio_pin, OUTPUT);
 }
 
